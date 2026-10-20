@@ -25,6 +25,7 @@
       </a>
       <nav class="nav" aria-label="Main">
         <a href="#services" data-i18n="nav_services">Services</a>
+        <a href="#products" data-i18n="nav_products">Products</a>
         <a href="#approach" data-i18n="nav_approach">How we work</a>
         <a href="#contact" data-i18n="nav_contact">Contact</a>
       </nav>
@@ -95,6 +96,48 @@
               <li data-i18n="s3_e">GDPR and NIS2 readiness</li>
             </ul>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section products" id="products">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 data-i18n="products_title">Our products</h2>
+          <p class="lead" data-i18n="products_lead">We build for ourselves too. Kvile is our colour theme for the tools developers work in all day.</p>
+        </div>
+
+        <article class="product">
+          <div class="product-copy">
+            <h3>Kvile</h3>
+            <p class="product-tag" data-i18n="k_tag">Colour that lets your eyes rest.</p>
+            <p class="product-desc" data-i18n="k_desc">Kvile is Norwegian for rest. It is one calm palette for 52 apps: editors, terminals, shells, command-line tools and browsers, in four variants from night to high contrast.</p>
+            <ul class="product-facts">
+              <li data-i18n="k_f1">One palette file generates all 52 apps, so a change reaches every one at once.</li>
+              <li data-i18n="k_f2">Contrast is measured in every variant, and the accents are checked for colour blindness.</li>
+              <li data-i18n="k_f3">A free version and a free 60-page e-book on colour for screens.</li>
+            </ul>
+            <div class="product-actions">
+              <a class="btn btn-primary" href="https://kvile.dev" rel="noopener" data-i18n="k_cta">Visit kvile.dev</a>
+              <a class="btn btn-ghost" href="https://kvile.dev/book/Kvile-Color-Theory-for-Screens.pdf" rel="noopener" data-i18n="k_book">Free e-book (PDF)</a>
+            </div>
+          </div>
+
+          <figure class="product-shot" id="kvile-shot">
+            <div class="kv-controls" role="group" aria-label="Kvile variant" data-i18n-aria="k_variants">
+              <button type="button" data-variant="natt" aria-pressed="true">Natt</button>
+              <button type="button" data-variant="skumring" aria-pressed="false">Skumring</button>
+              <button type="button" data-variant="dag" aria-pressed="false">Dag</button>
+              <button type="button" data-variant="kontrast" aria-pressed="false">Kontrast</button>
+            </div>
+            <div class="kv-frame">
+              <img id="kv-img" src="images/kvile-natt.webp" alt="Xcode showing a Swift file in Kvile Natt" width="1000" height="636" loading="lazy">
+            </div>
+            <div class="kv-swatches" id="kv-swatches" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <figcaption id="kv-caption" aria-live="polite">Natt, night. Deep blue-black with a soft, cool light. Made for long evenings.</figcaption>
+          </figure>
         </article>
       </div>
     </section>

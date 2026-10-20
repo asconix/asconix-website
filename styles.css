@@ -311,6 +311,125 @@ h2 {
 }
 .service-body li:last-child { border-bottom: 1px solid var(--rule); }
 
+/* ---------- Products (Kvile) ---------- */
+
+.products {
+  background: var(--night);
+  color: var(--white);
+}
+.products h2,
+.products h3 { color: var(--white); }
+.products .lead { color: var(--slate-light); }
+.products :focus-visible { outline-color: var(--teal-light); }
+
+.product {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: 2.5rem 4rem;
+  align-items: start;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--rule-dark);
+}
+
+.product-copy h3 {
+  font-size: clamp(2.4rem, 4.6vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.product-tag {
+  margin-top: 0.75rem;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: var(--teal-light);
+}
+
+.product-desc {
+  margin-top: 1.25rem;
+  max-width: 34rem;
+  color: var(--slate-light);
+}
+
+.product-facts { margin-top: 1.75rem; max-width: 34rem; }
+.product-facts li {
+  padding: 0.7rem 0;
+  border-top: 1px solid var(--rule-dark);
+  color: var(--white);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.product-facts li:last-child { border-bottom: 1px solid var(--rule-dark); }
+
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.product-shot { margin: 0; min-width: 0; }
+
+/* Variant switch: same pill control as the language toggle, on dark */
+.kv-controls {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  border: 1px solid var(--rule-dark);
+  border-radius: 999px;
+  padding: 2px;
+  margin-bottom: 1rem;
+}
+.kv-controls button {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--slate-light);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.kv-controls button:hover { color: var(--white); }
+.kv-controls button[aria-pressed="true"] { background: var(--teal-light); color: var(--night); }
+
+.kv-frame {
+  border: 1px solid var(--rule-dark);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--kv-bg, #0d151b);
+  line-height: 0;
+}
+.kv-frame img { width: 100%; height: auto; }
+
+/* The eight accent colours of the selected variant, on that variant's own background */
+.kv-swatches {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+  border: 1px solid var(--rule-dark);
+  border-radius: 14px;
+  background: var(--kv-bg, #0d151b);
+}
+.kv-swatches span {
+  aspect-ratio: 1 / 1;
+  border-radius: 0.3em;
+  background: var(--c, #888);
+}
+
+.product-shot figcaption {
+  margin-top: 0.9rem;
+  max-width: 40rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--slate-light);
+}
+
 /* ---------- Approach ---------- */
 
 .steps {
@@ -439,6 +558,7 @@ h2 {
 
 @media (max-width: 62rem) {
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 2rem; }
+  .product { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
 }
 
 @media (max-width: 56rem) {
@@ -458,6 +578,7 @@ h2 {
 
   .section-head { gap: 1rem; }
   .service { padding-block: 2rem; gap: 1rem; }
+  .kv-swatches { gap: 0.35rem; padding: 0.5rem; }
   .steps { grid-template-columns: minmax(0, 1fr); }
 
   .hero::after {

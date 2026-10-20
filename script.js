@@ -62,7 +62,18 @@
     f_error: "Fyll inn navn, en gyldig e-postadresse og en melding.",
     f_send: "Send melding",
     f_note: "Åpner e-postprogrammet ditt med meldingen klar til sending.",
-    footer_country: "Norge"
+    footer_country: "Norge",
+    nav_products: "Produkter",
+    products_title: "Våre produkter",
+    products_lead: "Vi bygger også for oss selv. Kvile er vårt fargetema for verktøyene utviklere bruker hele dagen.",
+    k_tag: "Farger som lar øynene hvile.",
+    k_desc: "Kvile betyr hvile. Det er én rolig palett for 52 apper: editorer, terminaler, skall, kommandolinjeverktøy og nettlesere, i fire varianter fra natt til høy kontrast.",
+    k_f1: "Én palettfil genererer alle 52 appene, så en endring når alle samtidig.",
+    k_f2: "Kontrasten er målt i hver variant, og aksentene er kontrollert for fargeblindhet.",
+    k_f3: "En gratis versjon og en gratis e-bok på 60 sider om farger på skjerm.",
+    k_cta: "Besøk kvile.dev",
+    k_book: "Gratis e-bok (PDF)",
+    k_variants: "Kvile-variant"
   };
 
   var META_DESC = {
@@ -77,6 +88,11 @@
   var nodes = document.querySelectorAll("[data-i18n]");
   nodes.forEach(function (el) { el.dataset.en = el.textContent; });
 
+  var ariaNodes = document.querySelectorAll("[data-i18n-aria]");
+  ariaNodes.forEach(function (el) { el.dataset.enAria = el.getAttribute("aria-label"); });
+
+  var currentLang = "en";
+
   var metaDesc = document.querySelector('meta[name="description"]');
   var buttons = document.querySelectorAll(".lang button");
 
@@ -85,6 +101,12 @@
       var key = el.getAttribute("data-i18n");
       el.textContent = lang === "no" && NO[key] ? NO[key] : el.dataset.en;
     });
+    ariaNodes.forEach(function (el) {
+      var key = el.getAttribute("data-i18n-aria");
+      el.setAttribute("aria-label", lang === "no" && NO[key] ? NO[key] : el.dataset.enAria);
+    });
+    currentLang = lang;
+    renderKvile();
     document.documentElement.lang = lang === "no" ? "nb" : "en";
     var fullLogo = document.querySelector(".brand-full");
     if (fullLogo) {
@@ -112,6 +134,79 @@
     setLang(saved, false);
   } else if ((navigator.language || "").toLowerCase().match(/^(nb|nn|no)/)) {
     setLang("no", false);
+  }
+
+  /* ---------- Kvile: variant switcher (screenshot, accent colours, caption) ---------- */
+
+  // Accent colours and background of each variant, taken from kvile.dev
+  var KVILE = {
+    natt:     { bg: "#0d151b", colors: ["#bdb1fe", "#85c38f", "#57a3f7", "#01dfd5", "#e29e2c", "#cdc94b", "#ca87b4", "#eb7b5f"] },
+    skumring: { bg: "#1a232b", colors: ["#ac8cb9", "#3dc2a0", "#5d9de5", "#46cef3", "#c88c3b", "#d0ba53", "#f49bd0", "#f18c7e"] },
+    dag:      { bg: "#f0f8ff", colors: ["#683f9f", "#477d3e", "#0a73cb", "#076767", "#b75001", "#6c4e00", "#935891", "#8f3e48"] },
+    kontrast: { bg: "#050a0f", colors: ["#a7afff", "#57cba3", "#a8d8ff", "#1ff5ce", "#efbb70", "#dfde4f", "#e294d5", "#fe8f7b"] }
+  };
+  var KVILE_TEXT = {
+    en: {
+      natt:     { name: "Natt, night.",     text: "Deep blue-black with a soft, cool light. Made for long evenings.", alt: "Xcode showing a Swift file in Kvile Natt" },
+      skumring: { name: "Skumring, dusk.",  text: "A little lighter than Natt, for rooms that are not quite dark.", alt: "Xcode showing a Swift file in Kvile Skumring" },
+      dag:      { name: "Dag, day.",        text: "Pale blue-white paper and ink that stays readable in daylight.", alt: "Xcode showing a Swift file in Kvile Dag" },
+      kontrast: { name: "Kontrast, high contrast.", text: "The same palette pushed to the highest contrast, for bright rooms and tired eyes.", alt: "Xcode showing a Swift file in Kvile Kontrast" }
+    },
+    no: {
+      natt:     { name: "Natt.",     text: "Dyp blåsvart med mykt, kjølig lys. Laget for lange kvelder.", alt: "Xcode med en Swift-fil i Kvile Natt" },
+      skumring: { name: "Skumring.", text: "Litt lysere enn Natt, for rom som ikke er helt mørke.", alt: "Xcode med en Swift-fil i Kvile Skumring" },
+      dag:      { name: "Dag.",      text: "Blekt blåhvitt papir og blekk som er lesbart i dagslys.", alt: "Xcode med en Swift-fil i Kvile Dag" },
+      kontrast: { name: "Kontrast.", text: "Samme palett skrudd til høyeste kontrast, for lyse rom og slitne øyne.", alt: "Xcode med en Swift-fil i Kvile Kontrast" }
+    }
+  };
+
+  var kvVariant = "natt";
+  var kvShot = document.getElementById("kvile-shot");
+  var kvImg = document.getElementById("kv-img");
+  var kvCaption = document.getElementById("kv-caption");
+  var kvSwatches = document.getElementById("kv-swatches");
+  var kvButtons = document.querySelectorAll(".kv-controls button");
+
+  function renderKvile() {
+    if (!kvShot) return;
+    var v = kvVariant || "natt";
+    var t = KVILE_TEXT[currentLang || "en"][v];
+    var def = KVILE[v];
+    var src = "images/kvile-" + v + ".webp";
+    if (kvImg.getAttribute("src") !== src) kvImg.setAttribute("src", src);
+    kvImg.alt = t.alt;
+    kvCaption.textContent = t.name + " " + t.text;
+    kvShot.style.setProperty("--kv-bg", def.bg);
+    var chips = kvSwatches.children;
+    for (var i = 0; i < chips.length; i++) chips[i].style.setProperty("--c", def.colors[i]);
+    kvButtons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.variant === v)); });
+  }
+
+  if (kvShot) {
+    kvButtons.forEach(function (b) {
+      b.addEventListener("click", function () {
+        kvVariant = b.dataset.variant;
+        renderKvile();
+      });
+    });
+
+    // Load the other three screenshots shortly before the section scrolls into view,
+    // so switching variants is instant without slowing down the first page load.
+    var preloaded = false;
+    var preload = function () {
+      if (preloaded) return;
+      preloaded = true;
+      Object.keys(KVILE).forEach(function (k) { (new Image()).src = "images/kvile-" + k + ".webp"; });
+    };
+    if ("IntersectionObserver" in window) {
+      var kvObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { preload(); kvObs.disconnect(); }
+      }, { rootMargin: "600px 0px" });
+      kvObs.observe(kvShot);
+    } else {
+      preload();
+    }
+    renderKvile();
   }
 
   /* ---------- Header: full logo with tagline at the top, compact logo once scrolled ---------- */

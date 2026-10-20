@@ -12,6 +12,7 @@ Static site for GitHub Pages. No build step, no dependencies, no third-party req
 - `logo.svg`: primary logo without tagline (header when scrolled or on small screens)
 - `logo-dark.svg`: logo for dark backgrounds (footer, 404 page)
 - `favicon.svg`: the mark, used as site icon
+- `images/`: Kvile screenshots for the products section (one per variant)
 - `fonts/`: Outfit (headlines) and Inter (body text), self-hosted, with their licences
 - `.nojekyll`: tells GitHub Pages to serve the files as they are
 
@@ -24,6 +25,15 @@ The site follows `asconix-ci` (brand guidelines v1.0).
 - **Fonts:** Outfit SemiBold for headlines, Inter for body text.
 - **Logo:** the primary logo with tagline is shown at 280 px wide at the top of the page. Below that width, and once the page is scrolled, the version without tagline is used, as the minimum-size rules require.
 - **Updating the logo:** copy the new files from `asconix-ci/logo/` over `logo-full.svg` (`asconix-logo-full.svg`), `logo.svg` (`asconix-logo.svg`), `logo-dark.svg` (`asconix-logo-dark.svg`) and `favicon.svg` (`asconix-mark.svg`).
+
+## Products section (Kvile)
+
+The Kvile colour theme is presented in the **Our products** section (`#products`).
+
+- The four screenshots in `images/` come from `kvile-web/screenshots` (Xcode, `Session.swift`, 1000 px wide). The accent colours and backgrounds shown under the screenshot are set in `script.js` (`KVILE`) and match kvile.dev.
+- English and Norwegian text for the section is in the page (English) and in the `NO` object in `script.js`; the variant captions are in `KVILE_TEXT`.
+- The section links to https://kvile.dev and to the free e-book PDF. It deliberately shows no price, because the early-bird price on kvile.dev will change.
+- To add another product, copy the `<article class="product">` block in `index.html` and give it its own images.
 
 ## Publish on GitHub Pages
 
